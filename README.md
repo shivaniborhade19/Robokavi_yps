@@ -1,4 +1,5 @@
-# ROBOKAVI: AI-Powered Poetic Plotter
+# RoboKavi-CoreXY machine with an AI computer 
+
 
 ## Project Description
 
