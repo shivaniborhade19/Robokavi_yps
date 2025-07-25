@@ -1,166 +1,679 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title id="pageTitle">RoboKavi - Marathi Poem Plotter</title>
-  <style>
-    #mainUI { display: none; }
-    #startBtn { font-size: 24px; padding: 20px; }
-    .hidden { display: none; }
-  </style>
-</head>
-<body onload="setup()">
-  <!-- 🚀 Start Screen -->
-  <div id="startScreen">
-    <h1>RoboKavi</h1>
-    <button id="startBtn" onclick="startApp()">▶️ Start</button>
-  </div>
-
-  <!-- 🌐 Main App UI -->
-  <div id="mainUI">
-    <h1 id="title">RoboKavi - Marathi Poem Plotter</h1>
-
-    <label>
-      🌐 <input type="checkbox" id="langSwitch" onchange="toggleLang()"> English / मराठी
-    </label><br><br>
-
-    <label>Choose Input Mode:</label><br>
-    <input type="radio" name="inputMode" id="voiceMode" onchange="selectInputMode()"> 🎙️ Voice
-    <input type="radio" name="inputMode" id="typeMode" onchange="selectInputMode()" checked> ✍️ Type<br><br>
-
-    <label id="nameLabel">Enter Name:</label><br>
-    <input type="text" id="name"><br>
-
-    <label id="subjectLabel">Enter Subject:</label><br>
-    <input type="text" id="subject"><br><br>
-
-    <button onclick="generatePoem()" id="submitBtn">Generate Poem</button>
-
-    <p id="status" style="font-weight:bold; font-size: 1.2em; margin-top: 1em;"></p>
-    <pre id="poemOutput" style="white-space: pre-wrap; font-size: 1.1em;"></pre>
-  </div>
-
-  <script>
-    let language = "en";
-
-    function setup() {
-      toggleLang(); // Apply default language
-    }
-
-    function startApp() {
-      // Speak welcome message
-      const welcome = language === "mr"
-        ? "मी रोबोकवी आहे. तुमचं स्वागत आहे"
-        : "I am RoboKavi. Welcome!";
-      speak(welcome);
-
-      document.getElementById("startScreen").style.display = "none";
-      document.getElementById("mainUI").style.display = "block";
-    }
-
-    function toggleLang() {
-      language = document.getElementById("langSwitch").checked ? "mr" : "en";
-      document.getElementById("pageTitle").innerText =
-      document.getElementById("title").innerText =
-        language === "mr" ? "रोबोकवी - मराठी कविता प्लॉटर" : "RoboKavi - Marathi Poem Plotter";
-      document.getElementById("nameLabel").innerText =
-        language === "mr" ? "तुमचं नाव:" : "Enter Name:";
-      document.getElementById("subjectLabel").innerText =
-        language === "mr" ? "तुमचा आवडता विषय:" : "Enter Subject:";
-      document.getElementById("submitBtn").innerText =
-        language === "mr" ? "कविता तयार करा" : "Generate Poem";
-    }
-
-    function selectInputMode() {
-      if (document.getElementById("voiceMode").checked) {
-        handleVoiceInput();
-      }
-    }
-
-    function speak(text) {
-      const synth = window.speechSynthesis;
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = language === "mr" ? "mr-IN" : "en-US";
-      synth.speak(utter);
-    }
-
-    function listen(targetId, promptText, callback = null) {
-      speak(promptText);
-      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-      recognition.lang = language === "mr" ? "mr-IN" : "en-US";
-      recognition.onresult = (event) => {
-        document.getElementById(targetId).value = event.results[0][0].transcript;
-        if (callback) callback();
-      };
-      recognition.start();
-    }
-
-    function handleVoiceInput() {
-      const namePrompt = language === "mr" ? "तुमचं नाव सांगा" : "Please tell your name";
-      const subjectPrompt = language === "mr" ? "तुमचा आवडता विषय सांगा" : "Please tell your favorite subject";
-
-      listen("name", namePrompt, () => {
-        setTimeout(() => {
-          listen("subject", subjectPrompt);
-        }, 3000);
-      });
-    }
-
-    function delay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    async function generatePoem() {
-      const name = document.getElementById("name").value;
-      const subject = document.getElementById("subject").value;
-      const status = document.getElementById("status");
-      const output = document.getElementById("poemOutput");
-
-      if (!name || !subject) {
-        status.innerText = language === "mr"
-          ? "❗ कृपया नाव आणि विषय द्या."
-          : "❗ Please provide name and subject.";
-        return;
-      }
-
-      status.innerText = language === "mr"
-        ? "🧠 कविता तयार होते आहे..."
-        : "🧠 Generating poem...";
-      output.innerText = "";
-
-      try {
-        const response = await fetch("/generate-poem", {
-          method: "POST",
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, subject, language })
-        });
-
-        const data = await response.json();
-        if (!response.ok || data.error) {
-          status.innerText = "❌ " + (data.error || "Something went wrong.");
-          return;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">RoboKavi - Marathi Poem Plotter</title>
+    <style>
+        /* General Body and Container Styling for Landscape */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            background-color: #f0f2f5;
+            color: #333;
+            overflow: hidden; /* Prevent body scroll */
+            flex-direction: column; /* Center content vertically */
+            box-sizing: border-box;
         }
 
-        // Step 2: RoboKavi understanding
-        status.innerText = language === "mr"
-          ? "🤖 रोबोकवी कविता समजून घेत आहे..."
-          : "🤖 RoboKavi is understanding the poem...";
-        await delay(2000);
+        .container {
+            width: 90vw; /* Use 90% of viewport width */
+            max-width: 1200px; /* Max width for larger screens */
+            height: 80vh; /* Use 80% of viewport height */
+            max-height: 700px; /* Max height */
+            background-color: #fff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Softer, deeper shadow */
+            border-radius: 16px; /* More rounded corners */
+            padding: 30px;
+            display: flex;
+            flex-direction: column; /* Arrange content vertically */
+            justify-content: center; /* Center content */
+            align-items: center; /* Center horizontally */
+            text-align: center;
+            transition: all 0.5s ease-in-out; /* Smooth transitions for slides */
+            position: relative; /* For absolute positioning of step indicators */
+            overflow: hidden; /* Hide overflowing slide content */
+            box-sizing: border-box;
+        }
 
-        // Step 3: Writing
-        status.innerText = language === "mr"
-          ? "✍️ रोबोकवी कविता लिहीत आहे..."
-          : "✍️ RoboKavi is writing your poem...";
-        await delay(2000);
+        /* Headings */
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 25px;
+            font-size: 2.8em; /* Slightly larger */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05); /* Subtle text shadow */
+        }
 
-        output.innerText = data.poem || "No poem generated.";
-        setTimeout(() => { status.innerText = ""; }, 15000);
+        /* Buttons */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 35px; /* More padding */
+            border: none;
+            border-radius: 10px; /* More rounded */
+            cursor: pointer;
+            font-size: 1.3em; /* Larger text */
+            margin: 15px; /* More margin */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Button shadow */
+        }
 
-      } catch (error) {
-        console.error(error);
-        status.innerText = "❌ Error connecting to server.";
-      }
-    }
-  </script>
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        button:active {
+            transform: translateY(0); /* Press effect */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Text Inputs */
+        input[type="text"] {
+            width: 70%; /* Slightly narrower */
+            padding: 15px; /* More padding */
+            margin: 15px 0 25px 0;
+            border: 2px solid #ddd; /* Thicker border */
+            border-radius: 8px; /* More rounded */
+            font-size: 1.2em; /* Larger text */
+            box-sizing: border-box;
+            text-align: center;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2); /* Green focus ring */
+            outline: none;
+        }
+
+        label {
+            font-size: 1.2em; /* Larger text */
+            margin-bottom: 8px;
+            display: block;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Status and Output Areas */
+        #status {
+            font-weight: bold;
+            font-size: 1.4em; /* Larger status text */
+            margin-top: 25px;
+            color: #007bff;
+            min-height: 1.5em; /* Prevent layout shift */
+        }
+
+        #poemOutput {
+            white-space: pre-wrap;
+            font-size: 1.2em;
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 25px;
+            max-height: 35vh; /* Slightly more height for poem */
+            overflow-y: auto; /* Enable scrolling for long poems */
+            text-align: left;
+            width: 85%; /* Wider output area */
+            box-sizing: border-box;
+            line-height: 1.6; /* Better readability */
+        }
+
+        /* Slide Management */
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease-in-out; /* Slower transition */
+            padding: 0 50px;
+            box-sizing: border-box;
+            background-color: #fff; /* Ensure slides have background */
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+            position: static; /* Takes up space in flex container */
+            z-index: 1; /* Ensure active slide is on top */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Language Toggle Switch */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 30px; /* More spacing */
+            color: #555;
+        }
+        .switch-container span {
+            margin: 0 15px; /* More spacing for labels */
+            transition: color 0.3s ease;
+        }
+        .switch-container .active-lang {
+            color: #4CAF50; /* Highlight active language */
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 70px; /* Wider switch */
+            height: 38px; /* Taller switch */
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 38px; /* Match height for perfect roundness */
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 30px; /* Slightly smaller than slider height */
+            width: 30px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slider knob shadow */
+        }
+
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #4CAF50;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(32px); /* Adjust based on new width */
+            -ms-transform: translateX(32px);
+            transform: translateX(32px);
+        }
+
+        /* Step Indicators */
+        .step-indicators {
+            position: absolute;
+            bottom: 25px; /* Slightly higher */
+            display: flex;
+            gap: 12px; /* More space between dots */
+        }
+        .step-dot {
+            width: 14px; /* Larger dots */
+            height: 14px;
+            border-radius: 50%;
+            background-color: #bbb;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .step-dot.active {
+            background-color: #4CAF50;
+            transform: scale(1.2); /* Active dot slightly larger */
+        }
+
+        /* Media Queries for Responsiveness (still prioritize landscape) */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                width: 95vw;
+                height: 95vh;
+                padding: 20px;
+                border-radius: 10px;
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 15px;
+            }
+            button {
+                padding: 12px 25px;
+                font-size: 1.1em;
+                margin: 10px;
+            }
+            input[type="text"], label {
+                font-size: 1em;
+            }
+            #poemOutput {
+                font-size: 1em;
+                padding: 15px;
+                max-height: 30vh;
+            }
+            .switch-container {
+                font-size: 1em;
+            }
+            .switch {
+                width: 50px;
+                height: 28px;
+            }
+            .slider:before {
+                height: 22px;
+                width: 22px;
+                left: 3px;
+                bottom: 3px;
+            }
+            input:checked + .slider:before {
+                -webkit-transform: translateX(22px);
+                -ms-transform: translateX(22px);
+                transform: translateX(22px);
+            }
+            .step-indicators {
+                bottom: 15px;
+                gap: 8px;
+            }
+            .step-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    </style>
+</head>
+<body onload="setup()">
+
+    <div class="container">
+        <!-- Slide 1: Start Screen -->
+        <div id="startScreen" class="slide active">
+            <h1>RoboKavi</h1>
+            <button id="startBtn" onclick="nextStep()">▶️ Start</button>
+        </div>
+
+        <!-- Slide 2: Welcome & Language Select -->
+        <div id="langSelectScreen" class="slide">
+            <h1 id="welcomeTitle">Welcome to RoboKavi</h1>
+            <div class="switch-container">
+                <span id="langEnLabel" class="active-lang">English</span>
+                <label class="switch">
+                    <input type="checkbox" id="langSwitch" onchange="toggleLang()">
+                    <span class="slider round"></span>
+                </label>
+                <span id="langMrLabel">मराठी</span>
+            </div>
+            <!-- No "Continue" button here, language selection auto-advances -->
+        </div>
+
+        <!-- Slide 3: Enter Name -->
+        <div id="nameInputScreen" class="slide">
+            <h1 id="nameInputTitle">Enter Name</h1>
+            <label id="nameLabel">Your Name:</label>
+            <input type="text" id="name" placeholder="" onchange="handleTypedInput('name')">
+            <button id="nameNextBtn" class="hidden" onclick="nextStep()">Next</button>
+        </div>
+
+        <!-- Slide 4: Enter Subject -->
+        <div id="subjectInputScreen" class="slide">
+            <h1 id="subjectInputTitle">Enter Subject</h1>
+            <label id="subjectLabel">Your Favorite Subject:</label>
+            <input type="text" id="subject" placeholder="" onchange="handleTypedInput('subject')">
+            <button id="subjectNextBtn" class="hidden" onclick="nextStep()">Next</button>
+        </div>
+
+        <!-- Slide 5: Generate Poem -->
+        <div id="generatePoemScreen" class="slide">
+            <h1 id="generatePoemTitle">Generate Your Poem</h1>
+            <p id="reviewText" style="font-size: 1.1em; margin-bottom: 20px; color: #666;"></p>
+            <button onclick="generatePoem()" id="submitBtn">Generate Poem</button>
+            <p id="status" style="font-weight:bold; font-size: 1.2em; margin-top: 1em;"></p>
+            <pre id="poemOutput"></pre>
+        </div>
+
+        <!-- Step Indicators -->
+        <div class="step-indicators">
+            <div class="step-dot active" id="dot1"></div>
+            <div class="step-dot" id="dot2"></div>
+            <div class="step-dot" id="dot3"></div>
+            <div class="step-dot" id="dot4"></div>
+            <div class="step-dot" id="dot5"></div>
+        </div>
+    </div>
+
+    <script>
+        let language = "en";
+        let currentStep = 1; // Tracks the current active slide
+        const totalSteps = 5;
+        let inputMode = "voice"; // Changed to 'voice' as default
+
+        // Text content for different languages
+        const texts = {
+            en: {
+                pageTitle: "RoboKavi - Marathi Poem Plotter",
+                startBtn: "▶️ Start",
+                welcomeTitle: "Welcome to RoboKavi",
+                voiceModeLabel: "🎙️ Voice",
+                typeModeLabel: "✍️ Type",
+                nameInputTitle: "Enter Name",
+                nameLabel: "Your Name:",
+                namePlaceholder: "e.g., John Doe",
+                namePrompt: "Please tell your name",
+                subjectInputTitle: "Enter Subject",
+                subjectLabel: "Your Favorite Subject:",
+                subjectPlaceholder: "e.g., Nature, Love, Friendship",
+                subjectPrompt: "Please tell your favorite subject",
+                generatePoemTitle: "Generate Your Poem",
+                generateBtn: "Generate Poem",
+                nextBtn: "Next", // New text for the "Next" button
+                statusGenerating: "🧠 Generating poem...",
+                statusWriting: "✍️ RoboKavi is writing your poem...",
+                statusErrorInput: "❗ Please provide valid input.",
+                statusErrorServer: "❌ Error connecting to server.",
+                statusErrorResponse: "❌ Something went wrong.",
+                statusNoPoem: "No poem generated.",
+                reviewName: "Name: ",
+                reviewSubject: "Subject: "
+            },
+            mr: {
+                pageTitle: "रोबोकवी - मराठी कविता प्लॉटर",
+                startBtn: "▶️ सुरू करा",
+                welcomeTitle: "रोबोकवी मध्ये आपलं स्वागत आहे",
+                voiceModeLabel: "🎙️ आवाज",
+                typeModeLabel: "✍️ टाइप करा",
+                nameInputTitle: "नाव प्रविष्ट करा",
+                nameLabel: "तुमचं नाव:",
+                namePlaceholder: "उदा. अनिल",
+                namePrompt: "तुमचं नाव सांगा",
+                subjectInputTitle: "विषय प्रविष्ट करा",
+                subjectLabel: "तुमचा आवडता विषय:",
+                subjectPlaceholder: "उदा. निसर्ग, प्रेम, मैत्री",
+                subjectPrompt: "तुमचा आवडता विषय सांगा",
+                generatePoemTitle: "तुमची कविता तयार करा",
+                generateBtn: "कविता तयार करा",
+                nextBtn: "पुढील", // New text for the "Next" button
+                statusGenerating: "🧠 कविता तयार होत आहे...",
+                statusWriting: "✍️ रोबोकवी तुमची कविता लिहीत आहे...",
+                statusErrorInput: "❗ कृपया वैध इनपुट द्या.",
+                statusErrorServer: "❌ सर्व्हरशी संपर्क साधण्यात त्रुटी.",
+                statusErrorResponse: "❌ काहीतरी चूक झाली.",
+                statusNoPoem: "कविता तयार झाली नाही.",
+                reviewName: "नाव: ",
+                reviewSubject: "विषय: "
+            }
+        };
+
+        // --- UI Update Functions ---
+        function updateUI() {
+            const currentText = texts[language];
+            document.getElementById("pageTitle").innerText = currentText.pageTitle;
+            document.getElementById("startBtn").innerText = currentText.startBtn;
+            document.getElementById("welcomeTitle").innerText = currentText.welcomeTitle;
+            document.getElementById("nameInputTitle").innerText = currentText.nameInputTitle;
+            document.getElementById("nameLabel").innerText = currentText.nameLabel;
+            document.getElementById("name").placeholder = currentText.namePlaceholder;
+            document.getElementById("subjectInputTitle").innerText = currentText.subjectInputTitle;
+            document.getElementById("subjectLabel").innerText = currentText.subjectLabel;
+            document.getElementById("subject").placeholder = currentText.subjectPlaceholder;
+            document.getElementById("generatePoemTitle").innerText = currentText.generatePoemTitle;
+            document.getElementById("submitBtn").innerText = currentText.generateBtn;
+            document.getElementById("nameNextBtn").innerText = currentText.nextBtn;
+            document.getElementById("subjectNextBtn").innerText = currentText.nextBtn;
+
+            // Update language labels next to switch
+            document.getElementById("langEnLabel").classList.toggle('active-lang', language === 'en');
+            document.getElementById("langMrLabel").classList.toggle('active-lang', language === 'mr');
+
+            // Update input mode labels
+            // document.getElementById("voiceModeLabel").innerText = currentText.voiceModeLabel;
+            // document.getElementById("typeModeLabel").innerText = currentText.typeModeLabel;
+        }
+
+        // --- Core App Flow ---
+        function setup() {
+            updateUI(); // Set initial labels
+            showStep(currentStep); // Show the initial start screen
+        }
+
+        function showStep(stepNum) {
+            // Hide all slides
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            // Show the current slide
+            document.getElementById(getStepId(stepNum)).classList.add('active');
+
+            // Update step indicators
+            document.querySelectorAll('.step-dot').forEach((dot, index) => {
+                if (index + 1 === stepNum) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+
+            // Specific actions for each step
+            const nameInput = document.getElementById("name");
+            const subjectInput = document.getElementById("subject");
+            const nameNextBtn = document.getElementById("nameNextBtn");
+            const subjectNextBtn = document.getElementById("subjectNextBtn");
+            const statusElement = document.getElementById("status");
+            const poemOutput = document.getElementById("poemOutput");
+
+            // Clear status and output for new steps
+            statusElement.innerText = "";
+            poemOutput.innerText = "";
+
+            // Hide all "Next" buttons by default for new steps
+            nameNextBtn.classList.add("hidden");
+            subjectNextBtn.classList.add("hidden");
+
+            if (stepNum === 2) { // Language Select Screen
+                // Speak welcome message immediately when this screen is shown
+                speak(texts[language].welcomeTitle);
+            } else if (stepNum === 3) { // Name Input Screen
+                nameInput.value = ""; // Clear previous input
+                nameInput.focus(); // Focus on text input
+                if (inputMode === "voice") {
+                    setTimeout(() => listen("name", texts[language].namePrompt), 500); // Auto-prompt and listen
+                } else {
+                    // Show "Next" button for typed input if there's content
+                    if (nameInput.value.trim() !== "") {
+                        nameNextBtn.classList.remove("hidden");
+                    }
+                }
+            } else if (stepNum === 4) { // Subject Input Screen
+                subjectInput.value = ""; // Clear previous input
+                subjectInput.focus(); // Focus on text input
+                if (inputMode === "voice") {
+                    setTimeout(() => listen("subject", texts[language].subjectPrompt), 500); // Auto-prompt and listen
+                } else {
+                    // Show "Next" button for typed input if there's content
+                    if (subjectInput.value.trim() !== "") {
+                        subjectNextBtn.classList.remove("hidden");
+                    }
+                }
+            } else if (stepNum === 5) { // Generate Poem Screen
+                const name = nameInput.value;
+                const subject = subjectInput.value;
+                document.getElementById("reviewText").innerText =
+                    texts[language].reviewName + name + "\n" +
+                    texts[language].reviewSubject + subject;
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        // --- Language and Input Mode Handlers ---
+        function toggleLang() {
+            language = document.getElementById("langSwitch").checked ? "mr" : "en";
+            updateUI();
+            speak(texts[language].welcomeTitle); // Speak welcome message in new language
+            // Auto-advance after language selection
+            setTimeout(() => {
+                nextStep();
+            }, 2000); // Give time for welcome message to play
+        }
+
+        // This function is no longer directly used as radio buttons are removed.
+        // Keeping it for potential future use if input mode selection is re-introduced.
+        function selectInputMode() {
+            // inputMode = document.getElementById("voiceMode").checked ? "voice" : "type";
+        }
+
+        // --- Speech Synthesis (Speak) ---
+        function speak(text) {
+            const synth = window.speechSynthesis;
+            if (synth.speaking) {
+                synth.cancel(); // Stop any ongoing speech
+            }
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = language === "mr" ? "mr-IN" : "en-US";
+            synth.speak(utter);
+        }
+
+        // --- Speech Recognition (Listen) ---
+        function listen(targetId, promptText) {
+            speak(promptText); // Speak the prompt first
+
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            if (!recognition) {
+                alert(language === "mr" ? "तुमचा ब्राउझर व्हॉईस इनपुटला सपोर्ट करत नाही." : "Your browser does not support voice input.");
+                return;
+            }
+
+            recognition.lang = language === "mr" ? "mr-IN" : "en-US";
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById(targetId).value = transcript;
+                // Auto-advance after successful voice input
+                if (document.getElementById(targetId).value.trim() !== "") {
+                    nextStep();
+                } else {
+                    document.getElementById("status").innerText = texts[language].statusErrorInput;
+                    setTimeout(() => document.getElementById("status").innerText = "", 3000);
+                }
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error:", event.error);
+                if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+                    alert(language === "mr" ? "माईक वापरण्याची परवानगी द्यावी लागेल. ब्राउझर सेटिंग्ज तपासा." : "Microphone access denied. Please check your browser settings.");
+                } else {
+                    document.getElementById("status").innerText = language === "mr" ? "व्हॉईस इनपुटमध्ये त्रुटी आली." : "Voice input error occurred.";
+                    setTimeout(() => document.getElementById("status").innerText = "", 3000);
+                }
+                // If voice fails, user can still type and use the "Next" button
+                if (targetId === 'name') document.getElementById('nameNextBtn').classList.remove('hidden');
+                if (targetId === 'subject') document.getElementById('subjectNextBtn').classList.remove('hidden');
+            };
+
+            recognition.onend = () => {
+                // Recognition session ended.
+            };
+
+            recognition.start();
+        }
+
+        // --- Handle Typed Input (for Next button) ---
+        function handleTypedInput(inputId) {
+            const inputElement = document.getElementById(inputId);
+            const statusElement = document.getElementById("status");
+
+            if (inputElement.value.trim() === "") {
+                statusElement.innerText = texts[language].statusErrorInput;
+                // Keep the "Next" button hidden if input is empty
+                if (inputId === 'name') document.getElementById('nameNextBtn').classList.add('hidden');
+                if (inputId === 'subject') document.getElementById('subjectNextBtn').classList.add('hidden');
+            } else {
+                statusElement.innerText = ""; // Clear status
+                // Show the "Next" button if input is valid for typed mode
+                if (inputId === 'name') document.getElementById('nameNextBtn').classList.remove('hidden');
+                if (inputId === 'subject') document.getElementById('subjectNextBtn').classList.remove('hidden');
+            }
+        }
+
+
+        // --- Poem Generation Logic ---
+        async function generatePoem() {
+            const name = document.getElementById("name").value;
+            const subject = document.getElementById("subject").value;
+
+            const status = document.getElementById("status");
+            const output = document.getElementById("poemOutput");
+
+            if (!name || !subject) {
+                status.innerText = texts[language].statusErrorInput;
+                return;
+            }
+
+            status.innerText = texts[language].statusGenerating;
+            output.innerText = "";
+
+            try {
+                const response = await fetch("/generate-poem", {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, subject, language })
+                });
+
+                const data = await response.json();
+                if (!response.ok || data.error) {
+                    status.innerText = "❌ " + (data.error || texts[language].statusErrorResponse);
+                    return;
+                }
+
+                output.innerText = data.poem || texts[language].statusNoPoem;
+                status.innerText = texts[language].statusWriting; // Update status as poem is being "written"
+
+                // Optional: A small delay before clearing status or speaking
+                setTimeout(() => {
+                    // speak(language === "mr" ? "तुमची कविता तयार आहे." : "Your poem is ready."); // Announce poem is ready
+                    status.innerText = ""; // Clear status after a while
+                }, 10000); // Clear status after 10 seconds
+
+            } catch (error) {
+                console.error(error);
+                status.innerText = texts[language].statusErrorServer;
+            }
+        }
+
+        // --- Helper to get slide ID ---
+        function getStepId(stepNum) {
+            switch (stepNum) {
+                case 1: return "startScreen";
+                case 2: return "langSelectScreen";
+                case 3: return "nameInputScreen";
+                case 4: return "subjectInputScreen";
+                case 5: return "generatePoemScreen";
+                default: return "startScreen";
+            }
+        }
+    </script>
 </body>
 </html>
