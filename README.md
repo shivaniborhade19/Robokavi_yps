@@ -27,10 +27,10 @@ Before setting up the project, ensure you have the following installed on your s
 
 Follow these steps to get ROBOKAVI up and running on your local machine:
 
-First, clone the project repository to your local machine:
 
 ```bash
-1. Clone the Repository
+1.First, clone the project repository to your local machine:
+
 git clone [https://github.com/shivaniborhade19/Robokavi_yps.git](https://github.com/shivaniborhade19/Robokavi_yps.git)
 cd Robokavi # Navigate into your project directory
 
