@@ -22,7 +22,7 @@ Before setting up the project, ensure you have the following installed on your s
 * **Inkscape:** A vector graphics editor, required for converting text to SVG.
     * Download from: [https://inkscape.org/release/](https://inkscape.org/release/)
     * Ensure Inkscape's Command Line Interface (CLI) is accessible.
-*Gemini_API_Key:* Replace YOUR_API_KEY_HERE with your actual Gemini API key.
+* **Gemini_API_Key:**  Replace YOUR_API_KEY_HERE with your actual Gemini API key.
 
 ## Setup and Installation Guide
 
