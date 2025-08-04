@@ -1,123 +1,151 @@
-ROBOKAVI: AI-Powered Robotic Plotter
+# RoboKavi-CoreXY machine with an AI computer 
 
-Project Description
+
+
+## Project Description
+
 
 ROBOKAVI is an innovative project that seamlessly integrates Artificial Intelligence (AI) with robotic plotting technology to transform digital text into personalized, physical handwriting. Leveraging Google Gemini's capabilities for poem generation and a 2D plotter for physical transcription, ROBOKAVI aims to demystify advanced technologies and offer a tangible, engaging experience for users interested in AI, robotics, and creative computing. It currently supports poem generation and plotting in both English and Marathi (Devanagari script).
 
-Features
 
-    AI-Generated Poetry: Utilizes the Google Gemini API to generate original poems based on user prompts.
+## Features
 
-    Multilingual Support: Capable of generating and plotting poems in both English and Marathi languages.
 
-    SVG Conversion: Converts generated text into Scalable Vector Graphics (SVG) format using Inkscape for precise plotter control.
+* **AI-Generated Poetry:** Utilizes the Google Gemini API to generate original poems based on user prompts.
 
-    Robotic Handwriting: Employs a 2D plotter (based on the EasyDraw V3 system) to physically transcribe poems with a pen.
+* **Multilingual Support:** Capable of generating and plotting poems in both English and Marathi languages.
 
-    Tangible Output: Creates unique, handwritten physical outputs, bridging the gap between digital and physical realms.
+* **SVG Conversion:** Converts generated text into Scalable Vector Graphics (SVG) format using Inkscape for precise plotter control.
 
-Prerequisites
+* **Robotic Handwriting:** Employs a 2D plotter (based on the EasyDraw V3 system) to physically transcribe poems with a pen.
+
+* **Tangible Output:** Creates unique, handwritten physical outputs, bridging the gap between digital and physical realms.
+
+
+## Prerequisites
+
 
 Before setting up the project, ensure you have the following installed on your system:
 
-    Python 3.8+
 
-    pip (Python package installer)
+* **Python 3.8+**
 
-    Inkscape: A vector graphics editor, required for converting text to SVG.
+* **pip** (Python package installer)
 
-        Download from: https://inkscape.org/release/
+* **Inkscape:** A vector graphics editor, required for converting text to SVG.
 
-        Ensure Inkscape's Command Line Interface (CLI) is accessible.
+    * Download from: [https://inkscape.org/release/](https://inkscape.org/release/)
 
-    Gemini_API_Key: Replace YOUR_API_KEY_HERE with your actual Gemini API key.
+    * Ensure Inkscape's Command Line Interface (CLI) is accessible.
 
-Setup and Installation Guide
+* **Gemini_API_Key:**  Replace YOUR_API_KEY_HERE with your actual Gemini API key.
+
+
+## Setup and Installation Guide
+
 
 Follow these steps to get ROBOKAVI up and running on your local machine:
 
-    Clone the project repository to your local machine:
-    Bash
+
+
+
+**1. clone the project repository to your local machine:**
+
+```bash
 
 git clone https://github.com/shivaniborhade19/Robokavi_yps.git
-cd Robokavi_yps
 
-Create and Activate a Virtual Environment:
+cd Robokavi # Navigate into your project directory
+
+
+**2. Create and Activate a Virtual Environment:**
+
 
 It's highly recommended to use a virtual environment to manage dependencies:
-Bash
 
 python -m venv venv
 
-    On Windows:
-    Bash
+# On Windows
 
 .\venv\Scripts\activate
 
-On macOS/Linux:
-Bash
+# On macOS/Linux
 
-    source venv/bin/activate
+source venv/bin/activate
 
-Install Python Dependencies:
+
+3. Install Python Dependencies
+
 
 Install all required Python libraries using the requirements.txt file:
-Bash
 
 pip install -r requirements.txt
 
-Configure Inkscape CLI Path:
+
+4. Configure Inkscape CLI Path
+
 
 The project uses Inkscape's command-line interface to convert text to SVG. You need to ensure the svg_creator.py script knows where to find Inkscape's executable.
 
+
     Open the svg_creator.py file in your project directory.
+
 
     Locate the line where Inkscape's path is defined (it might be a variable like INKSCAPE_PATH or part of a subprocess.run command).
 
+
     Update this path to point to your Inkscape executable.
 
-    Windows Example:
-    Python
 
-r'C:\Program Files\Inkscape\bin\inkscape.exe'
+        Windows Example: r'C:\Program Files\Inkscape\bin\inkscape.exe'
 
-macOS Example:
-Python
 
-'/Applications/Inkscape.app/Contents/MacOS/inkscape'
+        macOS Example: /Applications/Inkscape.app/Contents/MacOS/inkscape
 
-Linux Example:
-Python
 
-        '/usr/bin/inkscape'
+        Linux Example: /usr/bin/inkscape (often in PATH by default)
 
-    (often in PATH by default)
 
-    Set Up Google Gemini API Key:
+5. Set Up Google Gemini API Key
 
-    The project requires an API key to access the Google Gemini service for poem generation.
 
-        Obtain your Gemini API key from the Google AI Studio: https://aistudio.google.com/
+The project requires an API key to access the Google Gemini service for poem generation.
 
-        Create a file named .env in the root directory of your project (the same directory as your main script, e.g., main.py).
 
-        Add your API key to this .env file in the following format:
+    Obtain your Gemini API key from the Google AI Studio: https://aistudio.google.com/
 
-        GEMINI_API_KEY=YOUR_API_KEY_HERE
+
+    Create a file named .env in the root directory of your project (the same directory as your main script, e.g., main.py).
+
+
+    Add your API key to this .env file in the following format:
+
+
+    GEMINI_API_KEY=YOUR_API_KEY_HERE
+
 
     (Replace YOUR_API_KEY_HERE with your actual Gemini API key.)
 
-    Important: Ensure your .gitignore file includes .env to prevent your API key from being accidentally committed to your public repository.
+
+        Important: Ensure your .gitignore file includes .env to prevent your API key from being accidentally committed to your public repository.
+
 
 How to Run the Project
 
+
 Once all prerequisites and setup steps are complete:
+
 
     Ensure your 2D plotter is connected to your computer via USB and powered on.
 
+
     Activate your virtual environment (if not already active).
 
-    Run your main project script:
-    Bash
 
-python app.py
+    Run your main project script (e.g., app.py):
+
+             python app.py
+
+this is the syntax of my readme file so i want to change the steps that follow to add this in your local machine only coding part in cod like format and steps 1,2 ,3 that is normal text like starting text also the text it become blue i want that in normal text only commands like creating env any installation command any file command that in code like format so mak
+
+e change that also
