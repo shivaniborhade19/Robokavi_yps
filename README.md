@@ -1,55 +1,72 @@
-# RoboKavi-CoreXY machine with an AI computer 
+ROBOKAVI: AI-Powered Robotic Plotter
 
-
-## Project Description
+Project Description
 
 ROBOKAVI is an innovative project that seamlessly integrates Artificial Intelligence (AI) with robotic plotting technology to transform digital text into personalized, physical handwriting. Leveraging Google Gemini's capabilities for poem generation and a 2D plotter for physical transcription, ROBOKAVI aims to demystify advanced technologies and offer a tangible, engaging experience for users interested in AI, robotics, and creative computing. It currently supports poem generation and plotting in both English and Marathi (Devanagari script).
 
-## Features
+Features
 
-* **AI-Generated Poetry:** Utilizes the Google Gemini API to generate original poems based on user prompts.
-* **Multilingual Support:** Capable of generating and plotting poems in both English and Marathi languages.
-* **SVG Conversion:** Converts generated text into Scalable Vector Graphics (SVG) format using Inkscape for precise plotter control.
-* **Robotic Handwriting:** Employs a 2D plotter (based on the EasyDraw V3 system) to physically transcribe poems with a pen.
-* **Tangible Output:** Creates unique, handwritten physical outputs, bridging the gap between digital and physical realms.
+    AI-Generated Poetry: Utilizes the Google Gemini API to generate original poems based on user prompts.
 
-## Prerequisites
+    Multilingual Support: Capable of generating and plotting poems in both English and Marathi languages.
+
+    SVG Conversion: Converts generated text into Scalable Vector Graphics (SVG) format using Inkscape for precise plotter control.
+
+    Robotic Handwriting: Employs a 2D plotter (based on the EasyDraw V3 system) to physically transcribe poems with a pen.
+
+    Tangible Output: Creates unique, handwritten physical outputs, bridging the gap between digital and physical realms.
+
+Prerequisites
 
 Before setting up the project, ensure you have the following installed on your system:
 
-* **Python 3.8+**
-* **pip** (Python package installer)
-* **Inkscape:** A vector graphics editor, required for converting text to SVG.
-    * Download from: [https://inkscape.org/release/](https://inkscape.org/release/)
-    * Ensure Inkscape's Command Line Interface (CLI) is accessible.
-* **Gemini_API_Key:**  Replace YOUR_API_KEY_HERE with your actual Gemini API key.
+    Python 3.8+
 
-## Setup and Installation Guide
+    pip (Python package installer)
+
+    Inkscape: A vector graphics editor, required for converting text to SVG.
+
+        Download from: https://inkscape.org/release/
+
+        Ensure Inkscape's Command Line Interface (CLI) is accessible.
+
+    Gemini_API_Key: Replace YOUR_API_KEY_HERE with your actual Gemini API key.
+
+Setup and Installation Guide
 
 Follow these steps to get ROBOKAVI up and running on your local machine:
 
+    Clone the project repository to your local machine:
+    Bash
 
-
-**1. clone the project repository to your local machine:**
-```bash
 git clone https://github.com/shivaniborhade19/Robokavi_yps.git
-cd Robokavi # Navigate into your project directory
+cd Robokavi_yps
 
-**2. Create and Activate a Virtual Environment:**
+Create and Activate a Virtual Environment:
 
 It's highly recommended to use a virtual environment to manage dependencies:
-python -m venv venv
-# On Windows
-.\venv\Scripts\activate
-# On macOS/Linux
-source venv/bin/activate
+Bash
 
-3. Install Python Dependencies
+python -m venv venv
+
+    On Windows:
+    Bash
+
+.\venv\Scripts\activate
+
+On macOS/Linux:
+Bash
+
+    source venv/bin/activate
+
+Install Python Dependencies:
 
 Install all required Python libraries using the requirements.txt file:
+Bash
+
 pip install -r requirements.txt
 
-4. Configure Inkscape CLI Path
+Configure Inkscape CLI Path:
 
 The project uses Inkscape's command-line interface to convert text to SVG. You need to ensure the svg_creator.py script knows where to find Inkscape's executable.
 
@@ -59,27 +76,38 @@ The project uses Inkscape's command-line interface to convert text to SVG. You n
 
     Update this path to point to your Inkscape executable.
 
-        Windows Example: r'C:\Program Files\Inkscape\bin\inkscape.exe'
+    Windows Example:
+    Python
 
-        macOS Example: /Applications/Inkscape.app/Contents/MacOS/inkscape
+r'C:\Program Files\Inkscape\bin\inkscape.exe'
 
-        Linux Example: /usr/bin/inkscape (often in PATH by default)
+macOS Example:
+Python
 
-5. Set Up Google Gemini API Key
+'/Applications/Inkscape.app/Contents/MacOS/inkscape'
 
-The project requires an API key to access the Google Gemini service for poem generation.
+Linux Example:
+Python
 
-    Obtain your Gemini API key from the Google AI Studio: https://aistudio.google.com/
+        '/usr/bin/inkscape'
 
-    Create a file named .env in the root directory of your project (the same directory as your main script, e.g., main.py).
+    (often in PATH by default)
 
-    Add your API key to this .env file in the following format:
+    Set Up Google Gemini API Key:
 
-    GEMINI_API_KEY=YOUR_API_KEY_HERE
+    The project requires an API key to access the Google Gemini service for poem generation.
+
+        Obtain your Gemini API key from the Google AI Studio: https://aistudio.google.com/
+
+        Create a file named .env in the root directory of your project (the same directory as your main script, e.g., main.py).
+
+        Add your API key to this .env file in the following format:
+
+        GEMINI_API_KEY=YOUR_API_KEY_HERE
 
     (Replace YOUR_API_KEY_HERE with your actual Gemini API key.)
 
-        Important: Ensure your .gitignore file includes .env to prevent your API key from being accidentally committed to your public repository.
+    Important: Ensure your .gitignore file includes .env to prevent your API key from being accidentally committed to your public repository.
 
 How to Run the Project
 
@@ -89,5 +117,7 @@ Once all prerequisites and setup steps are complete:
 
     Activate your virtual environment (if not already active).
 
-    Run your main project script (e.g., app.py):
-             python app.py
+    Run your main project script:
+    Bash
+
+python app.py
