@@ -49,16 +49,16 @@ Follow these steps to get ROBOKAVI up and running on your local machine:
 
 
 
-* **1. clone the project repository to your local machine:**
+**1. clone the project repository to your local machine:**
 
-
+```bash
 
 git clone https://github.com/shivaniborhade19/Robokavi_yps.git
 
 cd Robokavi # Navigate into your project directory
 
 
-* **2. Create and Activate a Virtual Environment:**
+**2. Create and Activate a Virtual Environment:**
 
 
 It's highly recommended to use a virtual environment to manage dependencies:
@@ -146,6 +146,6 @@ Once all prerequisites and setup steps are complete:
 
              python app.py
 
-this is the syntax of my readme file so i want to change the steps that follow to add this in your local machine only coding part in cod like format and steps 1,2 ,3 that is normal text like starting text also the text it become blue i want that in normal text only commands like creating env any installation command any file command that in code like format so mak
+this is the syntax of my readme file so i want to change the steps that follow to add this in your local machine only coding part in cod like format and steps 1,2 ,3 that is normal text like starting text also the text it become blue i want that in normal text only commands like creating env any installation command any file comm
 
-e change that also
+and that in code like format so make change that also
