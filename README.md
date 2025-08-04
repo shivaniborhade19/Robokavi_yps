@@ -35,7 +35,7 @@ Follow these steps to get ROBOKAVI up and running on your local machine:
 git clone https://github.com/shivaniborhade19/Robokavi_yps.git
 cd Robokavi # Navigate into your project directory
 
-2. Create and Activate a Virtual Environment
+**2. Create and Activate a Virtual Environment**
 
 It's highly recommended to use a virtual environment to manage dependencies:
 python -m venv venv
