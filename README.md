@@ -125,5 +125,7 @@ Once all prerequisites and setup steps are complete:
 ```bash         
  python app.py
  ```
+# More Information
+For photos of the RoboKavi hardware, live demo videos, and detailed documentation, visit the official project page:
 
-
+- [https://yeralaproject.org/robokavi/](https://yeralaproject.org/robokavi/)
