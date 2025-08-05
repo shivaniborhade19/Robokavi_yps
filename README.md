@@ -1,3 +1,5 @@
+
+
 # RoboKavi-CoreXY machine with an AI computer 
 
 
@@ -129,3 +131,12 @@ Once all prerequisites and setup steps are complete:
 For photos of the RoboKavi hardware, live demo videos, and detailed documentation, visit the official project page:
 
 - [https://yeralaproject.org/robokavi/](https://yeralaproject.org/robokavi/)
+
+🌐 मराठी
+प्रकल्प कसा चालवायचा
+
+एकदा सर्व आवश्यक गोष्टी व सेटअप पूर्ण झाल्यानंतर:
+
+    आपला 2D प्लॉटर USB द्वारे संगणकाला जोडलेला आणि सुरू केलेला असल्याची खात्री करा.
+
+    आपले virtual environment activate करा (जर आधीपासून active नसेल तर).
