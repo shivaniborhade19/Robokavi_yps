@@ -99,35 +99,28 @@ Linux Example:
 
 **5. Set Up Google Gemini API Key:**
 
-The project requires an API key to access the Google Gemini service for poem generation.
-    Obtain your Gemini API key from the Google AI Studio: https://aistudio.google.com/
+The project requires an API key to access the Google Gemini service for poem generation.  
+Obtain your Gemini API key from the Google AI Studio: https://aistudio.google.com/
 
+Create a file named `.env` in the root directory of your project (the same directory as your main script, e.g., `main.py`).
 
-    Create a file named .env in the root directory of your project (the same directory as your main script, e.g., main.py).
+Add your API key to this `.env` file in the following format:
 
+GEMINI_API_KEY=YOUR_API_KEY_HERE
 
-    Add your API key to this .env file in the following format:
+(Replace `YOUR_API_KEY_HERE` with your actual Gemini API key.)
 
+Important: Ensure your `.gitignore` file includes `.env` to prevent your API key from being accidentally committed to your public repository.
 
-    GEMINI_API_KEY=YOUR_API_KEY_HERE
-
-
-    (Replace YOUR_API_KEY_HERE with your actual Gemini API key.)
-
-
-        Important: Ensure your .gitignore file includes .env to prevent your API key from being accidentally committed to your public repository.
 
 
 **How to Run the Project**
 
-
 Once all prerequisites and setup steps are complete:
 
+- Ensure your 2D plotter is connected to your computer via USB and powered on.  
+- Activate your virtual environment (if not already active).
 
-    Ensure your 2D plotter is connected to your computer via USB and powered on.
-
-
-    Activate your virtual environment (if not already active).
  Run your main project script (e.g., app.py):
 ```bash         
  python app.py
