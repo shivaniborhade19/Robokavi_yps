@@ -112,3 +112,8 @@ Google AI Studio वरून तुमची Gemini API की मिळवा.
 ```bash
    python app.py
 ```
+
+**अधिक माहिती साठी:**
+
+RoboKavi हार्डवेअरचे फोटो, थेट डेमो व्हिडिओ आणि सविस्तर दस्तऐवज पाहण्यासाठी अधिकृत प्रकल्प पृष्ठाला भेट द्या:
+-[https://yeralaproject.org/robokavi/](https://yeralaproject.org/robokavi/)
