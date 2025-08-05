@@ -49,69 +49,57 @@ Follow these steps to get ROBOKAVI up and running on your local machine:
 
 
 
-**1. clone the project repository to your local machine:**
+**1. Clone the project repository to your local machine:**
 
 ```bash
-
 git clone https://github.com/shivaniborhade19/Robokavi_yps.git
+cd Robokavi
+```
 
-cd Robokavi # Navigate into your project directory
-
-
-2. Create and Activate a Virtual Environment:
-
+**2. Create and Activate a Virtual Environment:**
 
 It's highly recommended to use a virtual environment to manage dependencies:
 
+```bash
 python -m venv venv
-
-# On Windows
-
+```
+ On Windows
+```bash
 .\venv\Scripts\activate
-
-# On macOS/Linux
-
+```
+ On macOS/Linux
+```bash
 source venv/bin/activate
+```
 
-
-3. Install Python Dependencies
+**3. Install Python Dependencies:**
 
 
 Install all required Python libraries using the requirements.txt file:
-
+```bash
 pip install -r requirements.txt
+```
 
+**4. Configure Inkscape CLI Path**
 
-4. Configure Inkscape CLI Path
+The project uses Inkscape's command-line interface to convert text to SVG. You need to ensure the svg_creator.py script knows where to find Inkscape's executable. Open the svg_creator.py file in your project directory. Locate the line where Inkscape's path is defined (it might be a variable like INKSCAPE_PATH or part of a subprocess.run command). Update this path to point to your Inkscape executable.
 
+Windows Example:
+```bash
+ r'C:\Program Files\Inkscape\bin\inkscape.exe'
+  ```
+macOS Example:
+```bash
+/Applications/Inkscape.app/Contents/MacOS/inkscape
+ ```
+Linux Example: 
+```bash
+/usr/bin/inkscape (often in PATH by default)
+ ```
 
-The project uses Inkscape's command-line interface to convert text to SVG. You need to ensure the svg_creator.py script knows where to find Inkscape's executable.
-
-
-    Open the svg_creator.py file in your project directory.
-
-
-    Locate the line where Inkscape's path is defined (it might be a variable like INKSCAPE_PATH or part of a subprocess.run command).
-
-
-    Update this path to point to your Inkscape executable.
-
-
-        Windows Example: r'C:\Program Files\Inkscape\bin\inkscape.exe'
-
-
-        macOS Example: /Applications/Inkscape.app/Contents/MacOS/inkscape
-
-
-        Linux Example: /usr/bin/inkscape (often in PATH by default)
-
-
-5. Set Up Google Gemini API Key
-
+**5. Set Up Google Gemini API Key:**
 
 The project requires an API key to access the Google Gemini service for poem generation.
-
-
     Obtain your Gemini API key from the Google AI Studio: https://aistudio.google.com/
 
 
@@ -130,7 +118,7 @@ The project requires an API key to access the Google Gemini service for poem gen
         Important: Ensure your .gitignore file includes .env to prevent your API key from being accidentally committed to your public repository.
 
 
-How to Run the Project
+**How to Run the Project**
 
 
 Once all prerequisites and setup steps are complete:
@@ -140,12 +128,9 @@ Once all prerequisites and setup steps are complete:
 
 
     Activate your virtual environment (if not already active).
+ Run your main project script (e.g., app.py):
+```bash         
+ python app.py
+ ```
 
 
-    Run your main project script (e.g., app.py):
-
-             python app.py
-
-this is the syntax of my readme file so i want to change the steps that follow to add this in your local machine only coding part in cod like format and steps 1,2 ,3 that is normal text like starting text also the text it become blue i want that in normal text only commands like creating env any installation command any file comm
-
-and that in code like format so make change that also
