@@ -1,7 +1,7 @@
 
 
 # RoboKavi-CoreXY machine with an AI computer 
-![RoboKavi Demo](demo.gif.gif)
+![RoboKavi Demo](ro1.gif)
 
 <p align="center">
   <a href="https://yeralaproject.org/robokavi/"><img src="https://img.shields.io/badge/Website-Live-blue?style=flat-square" /></a>
