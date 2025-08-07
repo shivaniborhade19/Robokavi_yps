@@ -10,7 +10,7 @@
 </p>
 
 ---
-["मराठीत वाचा"](
+["मराठीत वाचा"](README_MR.md)
 
 ## Project Description
 
