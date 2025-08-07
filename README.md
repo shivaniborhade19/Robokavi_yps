@@ -1,7 +1,16 @@
 
 
 # RoboKavi-CoreXY machine with an AI computer 
+![RoboKavi Demo](![Uploading Untitled design(1).gif…]()
+)
 
+<p align="center">
+  <a href="https://yeralaproject.org/robokavi/"><img src="https://img.shields.io/badge/Website-Live-blue?style=flat-square" /></a>
+  <a href="https://github.com/shivaniborhade19/Robokavi_yps"><img src="https://img.shields.io/badge/GitHub-Repository-green?style=flat-square" /></a>
+  <a href="https://yeralaproject.org/robokavi/docs"><img src="https://img.shields.io/badge/Documentation-Available-orange?style=flat-square" /></a>
+</p>
+
+---
 
 
 ## Project Description
