@@ -6,8 +6,8 @@
 
 <p align="center">
   <a href="https://yeralaproject.org/robokavi/"><img src="https://img.shields.io/badge/Website-Live-blue?style=flat-square" /></a>
-  <a href="https://github.com/shivaniborhade19/Robokavi_yps"><img src="https://img.shields.io/badge/GitHub-Repository-green?style=flat-square" /></a>
-  <a href="https://yeralaproject.org/robokavi/docs"><img src="https://img.shields.io/badge/Documentation-Available-orange?style=flat-square" /></a>
+  <a href="https://github.com/shivaniborhade19/Robokavi_yps.git"><img src="https://img.shields.io/badge/GitHub-Repository-green?style=flat-square" /></a>
+  <a href="https://docs.google.com/document/d/1h_bxt81_M58kqT5QOQwHlfq1AnN8e0Prm4w2ntlJlbg/edit?usp=sharing"><img src="https://img.shields.io/badge/Documentation-Available-orange?style=flat-square" /></a>
 </p>
 
 ---
